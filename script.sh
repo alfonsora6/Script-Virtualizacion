@@ -17,7 +17,7 @@ if [ -f $nombrevm.qcow2 ]
 then
   echo "La imagen $nombrevm.qcow2 ya existe."
 else
-  echo "Creando nueva imagen.."
+  echo "Creando nueva imagen..."
   qemu-img create -f qcow2 -b bullseye-base.qcow2 $nombrevm.qcow2 5G &> /dev/null
 fi
 sleep 1
@@ -101,6 +101,7 @@ echo "Estableciendo '$nombrevm' como hostname..."
 ssh -i id_ecdsa debian@$ip -o "StrictHostKeyChecking no" "sudo -- bash -c 'chmod 666 /etc/hostname'" &> /dev/null
 ssh -i id_ecdsa debian@$ip "sudo -- bash -c 'echo "$nombrevm" > /etc/hostname'"  &> /dev/null
 ssh -i id_ecdsa debian@$ip "sudo -- bash -c 'chmod 644 /etc/hostname'"  &> /dev/null
+ssh -i id_ecdsa debian@$ip "sudo sed -i 's/debian/maquina1/g' /etc/hosts" &> /dev/null
 sleep 1
 
 echo "Reiniciando máquina.."
@@ -282,6 +283,6 @@ echo -e "\n---------------------------------------------------------------------
 echo "Creando instantánea de la máquina..."
 virsh -c qemu:///system shutdown maquina1
 sleep 5
-virsh -c qemu:///system snapshot-create-as $nombrevm --name "snapshot1" --description "snapshot1 - $nombrevm" --disk-only --atomic &> /dev/null
+virsh -c qemu:///system snapshot-create-as $nombrevm --name instantánea1 --description "Instantanea1 - $nombrevm" --disk-only --atomic &> /dev/null
 echo "Instantánea creada correctamente."
 
