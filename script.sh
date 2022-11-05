@@ -132,7 +132,6 @@ sleep 1
 
 vol=$(virsh -c qemu:///system domblklist maquina1 | grep vol1 | awk '{print $1}')
 
-
 ## Comprobamos la paquetería necesaria para crear el sistema de ficheros XFS.
 
 echo "Comprobando la paquetería necesaria para crear sistema de ficheros XFS..."
